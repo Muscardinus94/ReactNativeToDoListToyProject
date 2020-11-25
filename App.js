@@ -1,13 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {NavigationContainer} from "@react-navigation/native";
+import {createStackNavigator} from "@react-navigation/stack";
+import { StyleSheet} from 'react-native';
+import MainScreen from "./src/Screens/MainScreen";
+import ToDoMainScreen from "./src/Screens/ToDoMainScreen";
+import {Provider} from "react-redux";
+import {PersistGate} from "redux-persist/integration/react";
+
+import {store, persistor} from "./src/redux/store";
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      {/* <PersistGate persistor={persistor}> */}
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="MainScreen" component={MainScreen} />
+            <Stack.Screen name="ToDoMainScreen" component={ToDoMainScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      {/* </PersistGate> */}
+    </Provider>
+    
   );
 }
 
@@ -18,4 +34,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  touchableOpacityStyle: {
+    borderWidth: 1,
+    backgroundColor: "black",
+  },
+  textStyle: {
+    color: "white",
+  }
 });
